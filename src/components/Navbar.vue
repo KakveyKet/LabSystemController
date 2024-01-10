@@ -44,7 +44,7 @@
     </v-navigation-drawer>
     <v-row>
       <v-col class="d-lg-none d-block" cols="12  text-right">
-        <v-btn @click.stop="drawer = !drawer" icon>
+        <v-btn class="sticky-btn" @click.stop="drawer = !drawer" icon>
           <v-icon>mdi-menu</v-icon>
         </v-btn></v-col
       >
@@ -75,3 +75,14 @@ export default {
   },
 };
 </script>
+<style>
+.sticky-btn {
+  position: fixed;
+  top: 10px;
+  right: 20px; 
+  z-index: 100;
+  /* 
+  Adjust the top value as needed */
+  /*  ther styles as needed */
+}
+</style>
