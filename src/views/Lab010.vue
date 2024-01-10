@@ -8,7 +8,7 @@
             
           </div>
           <v-menu
-          open-on-hover
+         
           
         >
           <template v-slot:activator="{ props }">
