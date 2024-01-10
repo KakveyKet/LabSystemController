@@ -1,33 +1,79 @@
 // store.js
 import { defineStore } from 'pinia';
-import { ref } from 'vue';
+
 export const useAppStore = defineStore('computer', {
   state: () => ({
-    accessories: [
-      { name: "Mouse", selected: false, points: 0 },
-      { name: "VGA and Power Cable", selected: false, points: 0 },
-      { name: "Mouse Pad", selected: false, points: 0 },
-      { name: "Keyboard", selected: false, points: 0 },
-      { name: "System Unit", selected: false, points: 0 },
-      { name: "Monitor", selected: false, points: 0 },
-      { name: "Drive C", selected: false, points: 0 },
-      { name: "Internet", selected: false, points: 0 },
-      { name: "Environment", selected: false, points: 0 },
-    ],
-    newAccessory: ref(0),
+    computers: [
+      { id: 1, model: "Dell-Model1", monitor: "មាន", systemunit: "មាន", mouse: "មាន", mousePad: "មាន", network: "មាន", vgaandPowerCable: "មាន", DriverC: "មាន", clean: "មាន", keyboard: "មាន", score: 90 },
+      { id: 2, model: "Dell-Model2", monitor: "មាន", systemunit: "មាន", mouse: "មាន", mousePad: "មាន", network: "មាន", vgaandPowerCable: "មាន", DriverC: "មាន", clean: "មាន", keyboard: "មាន", score: 90 },
+      { id: 3, model: "Dell-Model3", monitor: "មាន", systemunit: "មាន", mouse: "មាន", mousePad: "មាន", network: "មាន", vgaandPowerCable: "មាន", DriverC: "មាន", clean: "មាន", keyboard: "មាន", score: 90 },
+    ]
   }),
   getters: {
-    totalPoints: (state) => state.accessories.reduce((sum, tag) => sum + tag.points, 0),
+    totalComputers: (state) => state.computers.length,
+    totalComputersWithScoreBelow90: (state) => state.computers.filter(computer => computer.score < 90).length,
   },
   actions: {
-    toggleAccessory(tag) {
-      tag.selected = !tag.selected;
-      tag.points = tag.selected ? 10 : 0;
-      this.newAccessory = this.totalPoints;
+    
+    sortComputersByName() {
+      this.$patch((state) => {
+        state.computers.sort((a, b) => a.model.localeCompare(b.model));
+      });
     },
-    submit() {
-      
-      this.accessories.forEach((tag) => (tag.selected = false));
+
+    sortComputersByScore() {
+      this.$patch((state) => {
+        state.computers.sort((a, b) => b.score - a.score);
+      });
     },
+    addComputer(computer) {
+      const id = this.computers.length + 1;
+      let score = 90; // Initial score
+  
+      // Deduct 10 points for each field with "មិនមាន"
+      for (const key in computer) {
+        if (computer[key] === "មិនមាន") {
+          score -= 10;
+        }
+      }
+  
+      this.computers.push({
+        id,
+        model: computer.model,
+        monitor: computer.monitor,
+        mouse: computer.mouse,
+        mousePad: computer.mousePad,
+        keyboard: computer.keyboard,
+        systemunit: computer.systemunit,
+        network: computer.network,
+        vgaandPowerCable: computer.vgaandPowerCable,
+        DriverC: computer.DriverC,
+        clean: computer.clean,
+        score,
+      });
+    },
+
+    editComputer(updatedComputer) {
+      const index = this.computers.findIndex(computer => computer.id === updatedComputer.id);
+
+      if (index !== -1) {
+        // Calculate the score based on the updated computer data
+        let score = 90;
+        for (const key in updatedComputer) {
+          if (updatedComputer[key] === "មិនមាន") {
+            score -= 10;
+          }
+        }
+
+        // Update the computer data and score
+        this.$patch((state) => {
+          state.computers[index] = {
+            ...state.computers[index],
+            ...updatedComputer,
+            score,
+          };
+        });
+      }
+    }
   }
 });

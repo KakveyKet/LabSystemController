@@ -11,7 +11,6 @@
                 </v-toolbar-title>
               </v-badge>
             </v-toolbar>
-
             <v-card-text>
               <v-textarea variant="filled" label="កំណត់ត្រ Computer"></v-textarea>
 
@@ -23,8 +22,8 @@
                   :key="tag.name"
                   @click="toggleAccessory(tag)"
                 >
-                  {{ tag.name }}
                 </v-chip>
+                <p>ID: {{ id }}</p>
               </v-chip-group>
             </v-card-text>
             <v-divider></v-divider>
@@ -39,6 +38,7 @@
                     color="primary"
                     v-bind="props"
                     @click="submit"
+                    :disabled="!anyAccessorySelected"
                   >
                     បញ្ជូនទិន្ន័យ
                   </v-btn>
@@ -50,7 +50,8 @@
                     </v-card-text>
                     <v-card width="50%" class="mx-auto">
                       <v-card-text class="text-h3 text-success text-center">
-                        {{ newAccessory }}
+                       {{$route.params.id}}
+                       hh
                       </v-card-text>
                     </v-card>
                     <v-card-actions class="justify-end">
@@ -74,21 +75,8 @@
   </v-app>
 </template>
 
-<script>
-import { useAppStore } from '../store/app';
-
-export default {
-  setup() {
-    const { accessories, toggleAccessory, submit, totalPoints, newAccessory } =
-      useAppStore();
-
-    return {
-      accessories,
-      toggleAccessory,
-      submit,
-      totalPoints,
-      newAccessory,
-    };
-  },
-};
+<script setup>
+import { useAppStore } from "../store/app";
+import { computed } from "vue";
+props: ['id']
 </script>

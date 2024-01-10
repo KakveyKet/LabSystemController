@@ -14,7 +14,8 @@ const routes = [
   },
   {
     path: "/lab010/:postId",
-    component: ComputerDetail10
+    component: ComputerDetail10,
+    props: true,
   }
 ]
 
