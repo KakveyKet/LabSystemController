@@ -4,9 +4,9 @@
       <v-row no-gutters color="red">
         <v-col class="align-center">
           <div class="d-flex align-center">
-            <h1 class="ml-6">សាល 010</h1>
+            <h1 class="ml-6">សាល 011</h1>
           </div>
-          <v-menu>
+         <v-menu>
             <template v-slot:activator="{ props }">
               <v-btn
                 color="grey-darken-1"
@@ -112,7 +112,7 @@
                   ]"
                   label="VGA and Power Cable"
                 ></v-select>
-                <v-select
+                <v-select 
                   :items="item"
                   v-model="newComputer.DriverC"
                   :rules="[() => !!newComputer.DriverC || 'សូមជ្រើសរើស']"
@@ -125,7 +125,6 @@
                   label="Clean"
                 ></v-select>
 
-                <!-- Add other fields as needed -->
               </v-card-text>
               <v-card-actions class="justify-end">
                 <v-btn @click="addComputer" color="primary">បញ្ចូល</v-btn>
@@ -149,7 +148,7 @@
           >
             {{ console.log("Rendering Computer:", computer) }}
             <v-card
-              :to="'/lab10/' + computer.id"
+              :to="'/lab11/' + computer.id"
               class="mx-auto"
               :class="{
                 'bg-green': computer.score === 90,
@@ -180,6 +179,7 @@
               </v-card>
             </v-card>
             <h3 class="mt-5 text-center">{{ computer.model }}</h3>
+
           </v-col>
         </v-row>
       </v-row>
@@ -232,7 +232,7 @@ export default {
 
       // Filter only the computers with lab equal to 10
       const filteredComputers = computers.filter(
-        (computer) => computer.lab === 10
+        (computer) => computer.lab === 11
       );
 
       // Sort by score or model based on the selected sort function
@@ -270,7 +270,7 @@ export default {
         newComputer.value.vgaandPowerCable &&
         newComputer.value.clean !== null
       ) {
-        newComputer.value.lab = 10;
+        newComputer.value.lab = 11;
         useAppStore().addComputer({ ...newComputer.value });
         for (const key in newComputer.value) {
           newComputer.value[key] = null;
@@ -298,14 +298,15 @@ export default {
       getDisplayedComputers,
       addComputer,
       items: [
-        { title: "ច្រោះតាម​ពិន្ថុ", sortFunction: "sortComputersByScore" },
-        { title: "ច្រោះតាម Model", sortFunction: "sortComputersByModel" },
+        { title: 'ច្រោះតាម​ពិន្ថុ', sortFunction: 'sortComputersByScore' },
+        { title: 'ច្រោះតាម Model', sortFunction: 'sortComputersByModel' },
       ],
       selectedSort,
     };
   },
 };
 </script>
+
 
 <style>
 /* Your additional styles go here */

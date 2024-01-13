@@ -23,14 +23,18 @@
               </template>
               <v-list-item to="/lab010" title="សាល 010"></v-list-item>
               <v-list-item to="/lab011" title="សាល 011"></v-list-item>
-              <v-list-item to="/lab013" title="សាល 013"></v-list-item>
-              <v-list-item
+              <v-list-item to="/lab013" title="សាល 013"></v-list-item
+              ><v-list-item
                 color="info"
                 to="/lab014"
                 title="សាល 014"
               ></v-list-item>
+              <v-list-item
+                to="/repairing"
+                title="កុំព្យូទ័រ ជួសជុល"
+              ></v-list-item>
             </v-list-group>
-            <v-list-item title="អ្នកកាន់កុំព្យទ័រ"></v-list-item>
+            <v-list-item to="/admin" title="អ្នកកាន់កុំព្យទ័រ"></v-list-item>
             <v-list-item title="របាយការណ៏"></v-list-item>
           </v-list>
         </v-col>
@@ -49,9 +53,9 @@
         </v-btn></v-col
       >
       <v-main>
-        <v-slide-y-transition>
+        <v-slide-x-transition>
           <router-view />
-        </v-slide-y-transition>
+        </v-slide-x-transition>
       </v-main>
     </v-row>
   </v-layout>
@@ -79,7 +83,7 @@ export default {
 .sticky-btn {
   position: fixed;
   top: 10px;
-  right: 20px; 
+  right: 20px;
   z-index: 100;
   /* 
   Adjust the top value as needed */

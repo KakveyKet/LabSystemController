@@ -3,6 +3,10 @@ import { createRouter, createWebHistory } from 'vue-router';
 import Dashboard from '@/views/Dashboard.vue';
 import Lab010 from '@/views/Lab010.vue';
 import ComputerDetail10 from '@/views/ComputerDetail010.vue';
+import Lab011 from '@/views/Lab011.vue';
+import Repairing from '@/views/Repairing.vue';
+import AdminDashBord from '@/views/AdminDashBord.vue';
+import ComputerDetail010Vue from '@/views/ComputerDetail010.vue';
 const routes = [
   {
     path: '/',
@@ -13,9 +17,20 @@ const routes = [
     component: Lab010,
   },
   {
-    path: "/lab010/:postId",
+    path: '/lab011',
+    component: Lab011,
+  },
+  {
+    path: '/repairing',
+    component: Repairing,
+  },
+  {
+    path: '/lab10/:id',
     component: ComputerDetail10,
-    props: true,
+  },
+  {
+    path: '/admin',
+    component: AdminDashBord,
   }
 ]
 

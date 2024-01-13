@@ -5,7 +5,7 @@
         <v-col cols="12">
           <v-card>
             <v-toolbar flat color="primary" class="pa-2" dark>
-              <v-badge color="green" :content="newAccessory">
+              <v-badge color="green" >
                 <v-toolbar-title class="ml-5 pa-2">
                   ពិន្នុរបស់ Computer 01
                 </v-toolbar-title>
@@ -17,13 +17,12 @@
               <v-divider class="my-2"></v-divider>
               <div class="pa-2 text-h6">គ្រឿង​​​​ accessory របស់ Computer</div>
               <v-chip-group multiple selected-class="bg-primary">
-                <v-chip
-                  v-for="tag in accessories"
-                  :key="tag.name"
-                  @click="toggleAccessory(tag)"
-                >
+                <v-chip>
+                  <router-link :to="'/lab10/' + $route.params.id">
+                    {{ $route.params.model }}
+                  </router-link>
                 </v-chip>
-                <p>ID: {{ id }}</p>
+                <p> {{ $route.params.model }}</p>
               </v-chip-group>
             </v-card-text>
             <v-divider></v-divider>
@@ -37,10 +36,10 @@
                     elevation="1"
                     color="primary"
                     v-bind="props"
-                    @click="submit"
-                    :disabled="!anyAccessorySelected"
                   >
-                    បញ្ជូនទិន្ន័យ
+                    <router-link :to="'/lab10/' + $route.params.id">
+                      បញ្ជូនទិន្ន័យ
+                    </router-link>
                   </v-btn>
                 </template>
                 <template v-slot:default="{ isActive }">
@@ -50,8 +49,7 @@
                     </v-card-text>
                     <v-card width="50%" class="mx-auto">
                       <v-card-text class="text-h3 text-success text-center">
-                       {{$route.params.id}}
-                       hh
+                        {{ $route.params.id }}
                       </v-card-text>
                     </v-card>
                     <v-card-actions class="justify-end">
@@ -78,5 +76,4 @@
 <script setup>
 import { useAppStore } from "../store/app";
 import { computed } from "vue";
-props: ['id']
 </script>

@@ -35,9 +35,10 @@
                   class="ms-2 bg-green float-right mt-4 ml-4"
                   icon
                   color="primary"
+                  :to="item.route"
                   size="large"
                 >
-                  <v-icon color="white" size="30">mdi-plus</v-icon>
+                  <v-icon color="white" size="30">mdi-arrow-right-thin</v-icon>
                 </v-btn>
               </v-col>
             </v-col>
@@ -60,8 +61,12 @@
                 icon
                 color="primary"
                 size="large"
+                :to="item.route"
               >
-                <v-icon color="white" size="30">mdi-plus</v-icon>
+                <v-icon>
+                  <v-icon color="white" size="30">mdi-arrow-right-thin</v-icon>
+
+                </v-icon>
               </v-btn>
             </v-col>
           </v-row>
@@ -77,27 +82,31 @@ import { useAppStore } from '@/store/app'; // Adjust the path to your store file
 
 export default {
   setup() {
-    const {totalComputers ,totalComputersWithScoreBelow90 } = useAppStore(); 
+    const {totalComputers ,totalComputersWithScoreBelow90  } = useAppStore(); 
 
     const data = ref([
       {
         title: 'ចំនួនកុំព្យូទ័រសរុប',
         number: totalComputers,
+        route:"/lab010",
         img: 'https://img.freepik.com/free-vector/desktop-computer-concept-illustration_114360-16232.jpg?t=st=1704251699~exp=1704252299~hmac=4fff85fab10d8e3900f25781c67e1b666275ad49cc315f7a8519d4b0b011eadc',
       },
       {
         title: 'ចំនួនអ្នកកាន់កុំព្យូទ័រសរុប',
         number: 112,
+        route:"/admin",
         img: 'https://img.freepik.com/free-vector/business-team-brainstorm-idea-lightbulb-from-jigsaw-working-team-collaboration-enterprise-cooperation-colleagues-mutual-assistance-concept-pinkish-coral-bluevector-isolated-illustration_335657-1651.jpg?size=626&ext=jpg&uid=R72959284&ga=GA1.2.685942804.1702829483&semt=ais',
       },
       {
         title: 'ចំនួនសាលកុំព្យូទ័រសរុប',
         number: 112,
+        route:"/test",
         img: 'https://img.freepik.com/free-vector/scientific-laboratory-workplace-concept-with-equipment-research-scientists-looking-computer-screen_1284-19448.jpg?size=626&ext=jpg&uid=R72959284&ga=GA1.1.685942804.1702829483&semt=ais',
       },
       {
         title: 'កុំព្យូទ័រកុំពុងជួសជុល',
         number: totalComputersWithScoreBelow90,
+        route:"/repairing",
         img: 'https://img.freepik.com/free-vector/computer-repair-support-service-isometric-illustration_1284-57663.jpg?w=996&t=st=1704252597~exp=1704253197~hmac=0c8c0f301c4f8ba92e6f1d8de236d8f88800dbb683e39ccda55d3dcd75f98f03',
       },
     ]);
