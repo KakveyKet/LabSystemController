@@ -6,10 +6,10 @@ import ComputerDetail10 from '@/views/ComputerDetail010.vue';
 import Lab011 from '@/views/Lab011.vue';
 import Repairing from '@/views/Repairing.vue';
 import AdminDashBord from '@/views/AdminDashBord.vue';
-import ComputerDetail010Vue from '@/views/ComputerDetail010.vue';
+import Login from '@/Auth/Login.vue';
 const routes = [
   {
-    path: '/',
+    path: '/dashboard',
     component: Dashboard,
   },
   {
@@ -31,7 +31,12 @@ const routes = [
   {
     path: '/admin',
     component: AdminDashBord,
-  }
+  },
+  {
+    path: '/',
+    component: Login,
+  },
+  
 ]
 
 const router = createRouter({

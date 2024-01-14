@@ -1,6 +1,11 @@
 <template>
-  <v-layout class="pa-5">
-    <v-navigation-drawer floating color="primary" v-model="drawer">
+  <v-layout  class="pa-5" >
+    <v-navigation-drawer
+      style="z-index: 2;"
+      floating
+      color="primary"
+      v-model="drawer"
+    >
       <v-row class="mt-5 text-center">
         <v-col>
           <v-avatar size="80">
@@ -16,7 +21,7 @@
       <v-row no-gutters class="mt-8">
         <v-col cols="12" lg="12">
           <v-list v-model:opened="open">
-            <v-list-item to="/" title="ព័តមានទូទៅ"></v-list-item>
+            <v-list-item to="/dashboard" title="ព័តមានទូទៅ"></v-list-item>
             <v-list-group value="សាលកុំព្យូទ័រ">
               <template v-slot:activator="{ props }">
                 <v-list-item v-bind="props" title="សាលកុំព្យូទ័រ"></v-list-item>
@@ -52,7 +57,7 @@
           <v-icon>mdi-menu</v-icon>
         </v-btn></v-col
       >
-      <v-main>
+      <v-main style="width: 100%;">
         <v-slide-x-transition>
           <router-view />
         </v-slide-x-transition>
@@ -60,8 +65,9 @@
     </v-row>
   </v-layout>
 </template>
-
 <script>
+import Login from "@/Auth/Login.vue";
+
 export default {
   data: () => ({
     drawer: true,
@@ -77,6 +83,7 @@ export default {
       this.drawer = false;
     },
   },
+  components: { Login },
 };
 </script>
 <style>
@@ -84,7 +91,7 @@ export default {
   position: fixed;
   top: 10px;
   right: 20px;
-  z-index: 100;
+  z-index: 10;
   /* 
   Adjust the top value as needed */
   /*  ther styles as needed */
