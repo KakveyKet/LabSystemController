@@ -6,7 +6,7 @@ export const useAppStore = defineStore('computer', {
     computers: [
       {
         "id": 1,
-        "lab" :10,
+        "lab": 10,
         "model": "Dell-Model1",
         "monitor": "មាន",
         "systemunit": "មាន",
@@ -125,10 +125,15 @@ export const useAppStore = defineStore('computer', {
         "score": 90
       }
     ],
+    users: [
+      { "id": 1, "username": "kakvey", "password": "12345678", "email": "kakvey@gmail.com", "role": "admin", "standfor": "lab 010" },
+      { "id": 2, "username": "tra", "password": "12345678", "email": "tra@gmail.com", "role": "staff", "standfor": "lab 011" }
+    ],
   }),
   getters: {
     totalComputers: (state) => state.computers.length,
     totalComputersWithScoreBelow90: (state) => state.computers.filter(computer => computer.score < 90).length,
+    isLoggedIn: (state) => !!state.currentUser,
   },
   actions: {
     sortComputersByName() {
@@ -167,7 +172,7 @@ export const useAppStore = defineStore('computer', {
           vgaandPowerCable: newComputer.vgaandPowerCable,
           DriverC: newComputer.DriverC,
           clean: newComputer.clean,
-          score, // Add the calculated score
+          score,
         });
       });
 
@@ -189,7 +194,7 @@ export const useAppStore = defineStore('computer', {
       });
     },
 
-    
+
     editComputer(updatedComputer) {
       const index = this.computers.findIndex(computer => computer.id === updatedComputer.id);
 
@@ -211,6 +216,51 @@ export const useAppStore = defineStore('computer', {
           };
         });
       }
-    }
+    },
+    AddNewUser(newUser) {
+      // Calculate the new user's ID automatically
+      const id = this.users.length > 0 ? this.users[this.users.length - 1].id + 1 : 1;
+    
+      // Add the new user to the users array
+      this.$patch((state) => {
+        state.users.push({
+          id,
+          ...newUser
+        });
+      });
+    
+      console.log('User added successfully:', { id, ...newUser });
+    },
+    
+    editUser(updatedUser) {
+      const index = this.users.findIndex(user => user.id === updatedUser.id);
+
+      if (index !== -1) {
+        this.$patch((state) => {
+          // Directly update the user at the specific index
+          state.users[index] = {
+            ...state.users[index],
+            ...updatedUser,
+          };
+        });
+
+        console.log('User edited successfully');
+      } else {
+        console.error('User not found for editing');
+      }
+    },
+    deleteUser(userId) {
+      const index = this.users.findIndex(user => user.id === userId);
+
+      if (index !== -1) {
+        this.$patch((state) => {
+          state.users.splice(index, 1);
+        });
+
+        console.log('User deleted successfully');
+      } else {
+        console.error('User not found for deletion');
+      }
+    },
   }
 });
