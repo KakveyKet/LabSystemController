@@ -1,7 +1,7 @@
 <template>
-  <v-layout  class="pa-5" >
+  <v-layout class="pa-5">
     <v-navigation-drawer
-      style="z-index: 2;"
+      style="z-index: 2"
       floating
       color="primary"
       v-model="drawer"
@@ -15,7 +15,9 @@
             >
             </v-img>
           </v-avatar>
-          <h2 class="text-white mt-3">Kakvey Ket</h2>
+          <h2 class="text-white mt-3">
+            {{ currentUser ? currentUser.username : "Guest" }}
+          </h2>
         </v-col>
       </v-row>
       <v-row no-gutters class="mt-8">
@@ -57,7 +59,7 @@
           <v-icon>mdi-menu</v-icon>
         </v-btn></v-col
       >
-      <v-main style="width: 100%;">
+      <v-main style="width: 100%">
         <v-slide-x-transition>
           <router-view />
         </v-slide-x-transition>
@@ -67,7 +69,8 @@
 </template>
 <script>
 import Login from "@/Auth/Login.vue";
-
+import { useAppStore } from "@/store/app";
+import { computed } from "vue";
 export default {
   data: () => ({
     drawer: true,
@@ -83,6 +86,14 @@ export default {
       this.drawer = false;
     },
   },
+  computed: {
+  currentUser() {
+    const user = useAppStore().currentUser;
+    console.log("Current User in Component:", user);
+    return user;
+  },
+},
+
   components: { Login },
 };
 </script>

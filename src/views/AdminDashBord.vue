@@ -122,22 +122,44 @@
           <v-list class="pa-3">
             <h1>បញ្ចូលអ្នកកាន់សាល</h1>
           </v-list>
-          <v-form class="pa-2" @submit.prevent="addUser">
+          <v-form
+            v-form
+            class="pa-2"
+            @submit.prevent="addUser"
+            ref="addUserForm"
+          >
             <v-text-field
+              :rules="[
+                () =>
+                  !!newUser.username ||
+                  'សូមបញ្ចូលឈ្មោះរបស់អ្នកប្រើប្រាស់ថ្មី់់់',
+              ]"
               v-model="newUser.username"
               label="Username"
             ></v-text-field>
             <v-text-field v-model="newUser.email" label="Email"></v-text-field>
             <v-text-field
+              :rules="[
+                (value) => !!value || 'សូមបញ្ចូលលេខសម្ងាត់ថ្មី',
+                (value) =>
+                  (value && value.length >= 8) ||
+                  'លេខសម្ងាត់ត្រូវតែច្រើនជាង 8 តួ',
+              ]"
               v-model="newUser.password"
               label="Password"
+              type="password"
             ></v-text-field>
             <v-select
               v-model="newUser.role"
               :items="rolesUser"
+              :rules="[() => !!newUser.role || 'សូមជ្រើសរើសមុខងារ']"
               label="Role"
             ></v-select>
-            <v-text-field v-model="newUser.standfor" label="Lab"></v-text-field>
+            <v-text-field
+              :rules="[() => !!newUser.standfor || 'សូមជ្រើសរើសសាល']"
+              v-model="newUser.standfor"
+              label="Lab"
+            ></v-text-field>
             <v-btn type="submit" size="large" block class="bg-primary">
               Add
             </v-btn>
@@ -163,7 +185,7 @@
           <v-list class="pa-3">
             <h1>កែប្រែអ្នកកាន់សាល</h1>
           </v-list>
-          <v-form class="pa-2" @submit.prevent="saveEditUser">
+          <v-form class="pa-2" @submit.prevent="saveEditUser" ref="editUserForm" >
             <v-text-field
               v-model="newUser.username"
               label="New Username"
@@ -220,11 +242,15 @@ export default {
     });
 
     const addUser = () => {
-      AddNewUser(newUser.value);
-      clearForm();
+      // Validate the form before adding the user
+      if ($refs.addUserForm.validate()) {
+        AddNewUser(newUser.value);
+        clearForm();
+      }
     };
     const saveEditUser = () => {
-      if (currentUser.value) {
+      // Validate the form before saving the edited user
+      if ($refs.editUserForm.validate() && currentUser.value) {
         // Call the editUser action with the updated user data
         editUser({
           id: currentUser.value.id,
@@ -232,7 +258,7 @@ export default {
           email: newUser.value.email,
           password: newUser.value.password,
           role: newUser.value.role,
-          standfor: newUser.value.standfor, // Corrected property name
+          standfor: newUser.value.standfor,
         });
 
         // Do not clear the form data immediately after saving

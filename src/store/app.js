@@ -3,6 +3,7 @@ import { defineStore } from 'pinia';
 
 export const useAppStore = defineStore('computer', {
   state: () => ({
+    currentUser: null,
     computers: [
       {
         "id": 1,
@@ -126,8 +127,10 @@ export const useAppStore = defineStore('computer', {
       }
     ],
     users: [
-      { "id": 1, "username": "kakvey", "password": "12345678", "email": "kakvey@gmail.com", "role": "admin", "standfor": "lab 010" },
-      { "id": 2, "username": "tra", "password": "12345678", "email": "tra@gmail.com", "role": "staff", "standfor": "lab 011" }
+      { "id": 1, "username": "Ket Kakvey", "password": "12345678", "email": "kakvey@gmail.com", "role": "Admin", "standfor": "lab 010" },
+      { "id": 2, "username": "Sophan Chan Tra", "password": "12345678", "email": "chantra@gmail.com", "role": "Staff", "standfor": "lab 011" },
+      { "id": 3, "username": "Sak MengSeu", "password": "12345678", "email": "seu@gmail.com", "role": "Staff", "standfor": "lab 011" },
+      { "id": 4, "username": "Ouk ReakSa", "password": "12345678", "email": "reaksa@gmail.com", "role": "Staff", "standfor": "lab 011" }
     ],
   }),
   getters: {
@@ -262,5 +265,16 @@ export const useAppStore = defineStore('computer', {
         console.error('User not found for deletion');
       }
     },
+    setCurrentUser(user) {
+      this.$patch((state) => {
+        state.currentUser = user;
+      });
+    },
+    loginUser(user) {
+      store.$patch((state) => {
+        state.currentUser = user;
+      });
+    },
+
   }
 });

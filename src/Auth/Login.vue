@@ -76,11 +76,18 @@
                       color="primary"
                       label="Email"
                       class=""
+                      :rules="[
+                        () => !!loginForm.email || 'Email is required',
+                        () => isEmailValid() || 'មិនមែនជា Email ទេ',
+                      ]"
                     ></v-text-field>
                     <v-text-field
                       clearable
                       variant="outlined"
                       v-model="loginForm.password"
+                      :rules="[
+                        () => !!loginForm.password || 'Password is required',
+                      ]"
                       color="primary"
                       label="Password"
                       class=""
@@ -98,6 +105,7 @@
     </v-img>
   </div>
 </template>
+<!-- Login.vue -->
 <script>
 import { ref } from "vue";
 import { useAppStore } from "@/store/app";
@@ -110,33 +118,51 @@ export default {
       password: "",
     });
 
-    const { users } = useAppStore();
+    const appStore = useAppStore();  // Create an instance of your store
+
     const router = useRouter();
 
     const login = () => {
-      // Check if the entered email and password match any user
-      const user = users.find(
-        (u) =>
-          u.email === loginForm.value.email &&
-          u.password === loginForm.value.password
-      );
+  // Check if the entered email and password match any user
+  const user = appStore.users.find(
+    (u) =>
+      u.email === loginForm.value.email &&
+      u.password === loginForm.value.password
+  );
 
-      if (user) {
-        // Perform the login logic (you might want to set a token, update state, etc.)
-        console.log("Login successful");
-        router.push("/dashboard");
-      } else {
-        // Display an error message or redirect to an error page
-        console.error("Invalid email or password");
-      }
+  if (user) {
+    // Perform the login logic (you might want to set a token, update state, etc.)
+    console.log("Login successful", user);
+
+    // Set the currentUser in the store
+    appStore.setCurrentUser(user);
+
+    // Redirect to the dashboard
+    router.push("/dashboard");
+  } else {
+    // Display an error message or redirect to an error page
+    console.error("Invalid email or password");
+  }
+};
+
+
+    const isEmailValid = () => {
+      // Check if the email contains '@gmail.com'
+      return /@gmail\.com$/.test(loginForm.value.email);
+    };
+
+    const isPasswordCorrect = () => {
+      // Replace this with your actual logic to check if the password is correct
+      return loginForm.value.password === 'correct_password';
     };
 
     return {
       loginForm,
       login,
+      isEmailValid,
+      isPasswordCorrect,
     };
   },
 };
+
 </script>
-
-
